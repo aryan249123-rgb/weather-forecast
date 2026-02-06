@@ -1,26 +1,64 @@
-"use client"
-import SearchBar from "@/components/searchBar/searchBar";
-import WeatherCard from "@/components/weatherCard/weatherCard";
-import { useState } from "react";
+"use client";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [city, setCity] = useState("");
-  const [temp, setTemp] = useState(0);
-  const [condition, setCondition] = useState("");
-
-  const handleSearch = (cityName: string) => {
-    setCity(cityName);
-    setTemp(28);
-    setCondition("Sunny");
-  };
-
+  const router = useRouter();
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-6 bg-gray-100">
-      <SearchBar onSearch={handleSearch} />
+    <div className="min-h-screen flex text-black items-center justify-center  from-indigo-500 via-purple-500 to-pink-500">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
+          Welcome Back
+        </h2>
+        <p className="text-center text-gray-500 mb-6">Login to your account</p>
 
-      {city && (
-        <WeatherCard city={city} temperature={temp} condition={condition} />
-      )}
+        <form className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          <div className="flex items-center justify-between text-sm">
+            <label className="flex items-center gap-2 text-gray-600">
+              <input type="checkbox" className="rounded" />
+              Remember me
+            </label>
+            <span className="text-indigo-600 hover:underline cursor-pointer">
+              Forgot password?
+            </span>
+          </div>
+
+          <button
+            onClick={() => {router.push("/dashboard")}}
+            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold text-lg hover:bg-indigo-700 transition"
+          >
+            Login
+          </button>
+        </form>
+
+        <p className="text-center text-sm text-gray-600 mt-6">
+          Don’t have an account?
+          <span className="text-indigo-600 font-semibold cursor-pointer hover:underline ml-1">
+            Sign up
+          </span>
+        </p>
+      </div>
     </div>
   );
 }
