@@ -2,23 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
-            steps {
-                git 'https://github.com/aryan249123-rgb/weather-forecast.git'
-            }
-        }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
-            
         }
 
         stage('Build') {
             steps {
-                sh 'npm run build'
+                bat 'npm run build'
             }
         }
+
+        stage('Test') {
+            steps {
+                bat 'npm test'
+            }
+        }
+
     }
 }
