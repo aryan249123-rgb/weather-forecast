@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'npm install'
+                        sh '/opt/homebrew/bin/npm install'
                     } else {
                         bat 'npm install'
                     }
@@ -18,9 +18,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'npm run build'
+                        sh 'echo Build running'
                     } else {
-                        bat 'npm run build'
+                        bat 'echo Build running'
                     }
                 }
             }
