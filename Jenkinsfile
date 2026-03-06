@@ -1,12 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/opt/homebrew/bin:${env.PATH}"
+    }
+
     stages {
         stage('Install Dependencies') {
             steps {
                 script {
                     if (isUnix()) {
-                        sh '/opt/homebrew/bin/npm install'
+                        sh 'npm install'
                     } else {
                         bat 'npm install'
                     }
