@@ -8,14 +8,6 @@ pipeline {
 
     stages {
 
-        // ❌ Removed duplicate checkout (Jenkins already does it)
-
-        stage('Maven Build') {
-            steps {
-                bat 'mvn clean package'
-            }
-        }
-
         stage('Install Node Dependencies') {
             steps {
                 bat 'npm install'
