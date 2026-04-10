@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDS = credentials('dockerhub_cred')
         DOCKER_IMAGE = "aryan249123/weather-forecast:latest"
     }
 
@@ -32,7 +31,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub_cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     bat """
-                    echo %PASS% | docker login -u %USER% --password-stdin
+                    docker login -u %USER% -p %PASS%
                     """
                 }
             }
