@@ -2,11 +2,19 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDS = credentials('dockerhub-creds')
-        DOCKER_IMAGE = "${DOCKER_CREDS_USR}/weather-app:latest"
+        DOCKER_CREDS = credentials('dockerhub_cred')
+        DOCKER_IMAGE = "aryan249123/weather-forecast:latest"
     }
 
     stages {
+
+        stage('Clone Repository') {
+            steps {
+                git credentialsId: 'aryan249123-rgb',
+                    url: 'https://github.com/aryan249123-rgb/weather-forecast.git',
+                    branch: 'main'
+            }
+        }
 
         stage('Install Node Dependencies') {
             steps {
@@ -20,12 +28,19 @@ pipeline {
             }
         }
 
+        stage('Login to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    bat """
+                    echo %PASS% | docker login -u %USER% --password-stdin
+                    """
+                }
+            }
+        }
+
         stage('Push to DockerHub') {
             steps {
-                bat """
-                docker login -u %DOCKER_CREDS_USR% -p %DOCKER_CREDS_PSW%
-                docker push %DOCKER_IMAGE%
-                """
+                bat "docker push %DOCKER_IMAGE%"
             }
         }
 
